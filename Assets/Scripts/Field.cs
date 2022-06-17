@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
+    private const int DefaultCellCount = 3;
     [SerializeField] private RectTransform m_FieldRectTransform;
     [SerializeField] private Cell m_cellPrefab;
 
-    [SerializeField] private int m_cellCount = 3;
-    [SerializeField] private float m_cellSpacing = 5;
+    [SerializeField] private int m_cellCount = DefaultCellCount;
+    private float m_cellSpacing = 7;
     private float m_cellSize = 100;
 
     private Cell[,] m_cellsArray;
+
+    public int CellCount { get => m_cellCount; set => m_cellCount = value; }
 
     private void Awake()
     {
@@ -26,9 +29,10 @@ public class Field : MonoBehaviour
 
     private void SetCellSizeAndSpacing()
     {
-        if (m_cellCount >= 3 && m_cellCount <= 7)
+        if (m_cellCount >= DefaultCellCount && m_cellCount <= 7)
         {
-            m_cellSize = 300 - (m_cellCount - 3) * 50;
+            m_cellSpacing = 9 - (m_cellCount - DefaultCellCount);
+            m_cellSize = 300 - (m_cellCount - DefaultCellCount) * 50;
         }
     }
 
@@ -54,6 +58,10 @@ public class Field : MonoBehaviour
                 m_cellsArray[x, y] = cell;
             }
         }
+    }
 
+    public Cell[,] GetCells()
+    {
+        return m_cellsArray;
     }
 }
