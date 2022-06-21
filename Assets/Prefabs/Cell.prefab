@@ -279,7 +279,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -322,10 +322,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98eb856a35ae9364f9b37fe3711b8a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_button: {fileID: 2561847770283790067}
-  m_mark: {fileID: 2561847769106587412}
-  m_circle: {fileID: 8661940663411721479}
-  m_cross: {fileID: 3147667365350640566}
+  m_Mark: {fileID: 2561847769106587412}
+  m_Circle: {fileID: 8661940663411721479}
+  m_Cross: {fileID: 3147667365350640566}
+  m_CircleRectTransform: {fileID: 2002208117382175886}
+  m_CrossRectTransform: {fileID: 3832694893973755694}
+  m_DefaultColor: {r: 1, g: 0.87058824, b: 0.7764706, a: 1}
+  m_Button: {fileID: 2561847770283790067}
 --- !u!1 &7814358264834919280
 GameObject:
   m_ObjectHideFlags: 0
