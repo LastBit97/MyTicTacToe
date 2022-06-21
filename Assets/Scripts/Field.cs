@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class Field : MonoBehaviour
 {
     private const int DefaultCellCount = 3;
-    [SerializeField] private RectTransform m_FieldRectTransform;
+    [SerializeField] private RectTransform m_fieldRectTransform;
     [SerializeField] private Cell m_cellPrefab;
 
     [SerializeField] private int m_cellCount = DefaultCellCount;
@@ -41,7 +42,7 @@ public class Field : MonoBehaviour
         m_cellsArray = new Cell[m_cellCount, m_cellCount];
 
         float fieldSize = m_cellCount * (m_cellSize + m_cellSpacing) - m_cellSpacing;
-        m_FieldRectTransform.sizeDelta = new Vector2(fieldSize, fieldSize);
+        m_fieldRectTransform.sizeDelta = new Vector2(fieldSize, fieldSize);
 
         float startX = -(fieldSize / 2) + (m_cellSize / 2);
         float startY = (fieldSize / 2) - (m_cellSize / 2);

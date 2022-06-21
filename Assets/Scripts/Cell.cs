@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,13 +8,12 @@ public class Cell : MonoBehaviour
 {
     [SerializeField] private Button m_button;
     [SerializeField] private Text m_mark;
+    [SerializeField] private Image m_circle;
+    [SerializeField] private Image m_cross;
+
     private bool IsEmpty()
     {
-        if (m_mark.text != "")
-        {
-            return false;
-        }
-        return true;
+        return m_mark.text == "";
     }
 
     public void SetMark(bool player1)
@@ -21,6 +21,11 @@ public class Cell : MonoBehaviour
         if (IsEmpty())
         {
             m_mark.text = player1 ? "X" : "0";
+            if (player1)
+            {
+                m_cross.gameObject.SetActive(true);
+            }
+            else m_circle.gameObject.SetActive(true);
         }
     }
 

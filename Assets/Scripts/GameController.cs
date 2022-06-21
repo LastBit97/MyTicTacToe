@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -28,17 +30,36 @@ public class GameController : MonoBehaviour
         }
 
         cell.SetMark(m_playerX);
-        CheckForWin(cell.GetMark());
+
+        var mark = cell.GetMark();
+
+        var winLine = CheckForWin(mark);
+
+        if (winLine.Count > 0)
+        {
+            Win(mark, winLine);
+        }
 
         m_playerX = !m_playerX;
     }
 
-    public void CheckForWin(string mark)
+    private void Win(string mark, List<Point> winLine)
     {
-        if (m_cells == null)
+        Debug.Log(mark == "X" ? "Победил крестик" : "Победил нолик");
+
+        var color = Color.green;
+
+        foreach (var point in winLine)
         {
-            m_cells = m_field.GetCells();
+            var x = point.X;
+            var y = point.Y;
+            m_cells[x,y].GetComponent<Image>().color = color;
         }
+    }
+
+    public List<Point> CheckForWin(string mark)
+    {
+        m_cells ??= m_field.GetCells();
 
         //Диагонали
 
@@ -52,17 +73,31 @@ public class GameController : MonoBehaviour
             if (m_cells[i, m_field.CellCount - i - 1].GetMark() == mark)
                 countDiagSecond++;
         }
-        if (countDiagMain == countForWin || countDiagSecond == countForWin)
-            Debug.Log("Win");
+
+        var points = new List<Point>();
+
+        if (countDiagMain == countForWin)
+        {
+            for (int i = 0; i < m_field.CellCount; i++)
+            {
+                points.Add(new Point(i, i));
+            }
+        }
+
+        if (countDiagSecond == countForWin)
+        {
+            for (int i = 0; i < m_field.CellCount; i++)
+            {
+                points.Add(new Point(i, m_field.CellCount - i - 1));
+            }
+        }
 
         //Столбцы и строки
 
-        int countCol = 0, countRow = 0;
-
         for (int x = 0; x < m_field.CellCount; x++)
         {
-            countCol = 0;
-            countRow = 0;
+            var countCol = 0;
+            var countRow = 0;
             for (int y = 0; y < m_field.CellCount; y++)
             {
                 if (m_cells[x, y].GetMark() == mark)
@@ -70,11 +105,38 @@ public class GameController : MonoBehaviour
                 if (m_cells[y, x].GetMark() == mark)
                     countRow++;
             }
-            if (countCol == countForWin || countRow == countForWin)
-                Debug.Log("Win");
-        }
-        
 
+            if (countCol == countForWin)
+            {
+                for (int i = 0; i < m_field.CellCount; i++)
+                {
+                    points.Add(new Point(x, i));
+                }
+            }
+
+            if (countRow != countForWin) continue;
+            {
+                for (int i = 0; i < m_field.CellCount; i++)
+                {
+                    points.Add(new Point(i, x));
+                }
+            }
+        }
+
+        return points;
     }
+
+    public struct Point
+    {
+        public int X { get; }
+        public int Y { get; }
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
 
 }
